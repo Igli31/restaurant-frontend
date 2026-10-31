@@ -1,0 +1,19 @@
+.order-line {
+  display: flex;
+  align-items: end;
+  gap: 0.7rem;
+  margin-bottom: 1rem;
+}
+.order-line .form-group {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+}
+.order-line input {
+  width: 5rem;
+}
+@media (max-width: 600px) {
+  .order-line {
+    flex-wrap: wrap;
+  }
+}

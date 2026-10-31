@@ -1,0 +1,20 @@
+import { Routes } from '@angular/router';
+import { Home } from './components/home/home';
+import { CategoryList } from './components/category-list/category-list';
+import { CategoryForm } from './components/category-form/category-form';
+import { DishList } from './components/dish-list/dish-list';
+import { DishForm } from './components/dish-form/dish-form';
+import { OrderList } from './components/order-list/order-list';
+import { OrderForm } from './components/order-form/order-form';
+export const routes: Routes = [
+  { path: '', component: Home },
+  { path: 'categories', component: CategoryList },
+  { path: 'categories/new', component: CategoryForm },
+  { path: 'categories/edit/:id', component: CategoryForm },
+  { path: 'dishes', component: DishList },
+  { path: 'dishes/new', component: DishForm },
+  { path: 'dishes/edit/:id', component: DishForm },
+  { path: 'orders', component: OrderList },
+  { path: 'orders/new', component: OrderForm },
+  { path: '**', redirectTo: '' },
+];

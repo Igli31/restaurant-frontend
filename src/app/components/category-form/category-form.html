@@ -1,0 +1,22 @@
+<section class="form-container">
+  <h1>{{ id ? 'Edit' : 'Add' }} category</h1>
+  @if (error()) {
+    <p role="alert" class="error">{{ error() }}</p>
+  }
+  @if (loading()) {
+    <p>Loading…</p>
+  }
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <div class="form-group">
+      <label for="name">Name</label><input id="name" formControlName="name" maxlength="100" />
+    </div>
+    @if (form.invalid && form.touched) {
+      <p class="error">Enter a name.</p>
+    }
+    <div class="actions">
+      <button class="btn" type="submit" [disabled]="busy() || loading() || form.disabled">
+        {{ busy() ? 'Saving…' : 'Save' }}</button
+      ><a routerLink="/categories">Cancel</a>
+    </div>
+  </form>
+</section>

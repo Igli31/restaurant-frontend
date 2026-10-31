@@ -1,0 +1,14 @@
+{
+  "/api/categories": {
+    "target": "http://localhost:8081",
+    "secure": false
+  },
+  "/api/dishes": {
+    "target": "http://localhost:8081",
+    "secure": false
+  },
+  "/api/orders": {
+    "target": "http://localhost:8082",
+    "secure": false
+  }
+}

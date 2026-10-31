@@ -1,0 +1,54 @@
+<section>
+  <div class="heading">
+    <h1>Orders</h1>
+    <div class="actions">
+      <button (click)="load()" [disabled]="loading()">Refresh</button
+      ><a class="btn" routerLink="/orders/new">Place order</a>
+    </div>
+  </div>
+  @if (error()) {
+    <p role="alert" class="error">{{ error() }}</p>
+  }
+  @if (loading()) {
+    <p>Loading…</p>
+  } @else {
+    @for (order of orders(); track order.id) {
+      <article class="card order">
+        <div class="heading">
+          <h2>Order #{{ order.id }} · {{ order.customerName }}</h2>
+          <span class="badge">{{ order.status }}</span>
+        </div>
+        <p>Table {{ order.tableNumber }} · {{ order.createdAt | date: 'medium' }}</p>
+        <ul>
+          @for (item of order.items; track $index) {
+            <li>
+              {{ item.quantity }} × {{ item.dishName }} — {{ item.lineTotal | number: '1.2-2' }}
+            </li>
+          }
+        </ul>
+        <p>
+          <strong>Total: {{ order.total | number: '1.2-2' }}</strong>
+        </p>
+        <div class="actions">
+          @if (order.status === 'PLACED') {
+            <button class="btn" [disabled]="busy()" (click)="update(order, 'PREPARING')">
+              Start preparing
+            </button>
+          }
+          @if (order.status === 'PREPARING') {
+            <button class="btn" [disabled]="busy()" (click)="update(order, 'SERVED')">
+              Mark served
+            </button>
+          }
+          @if (order.status === 'PLACED' || order.status === 'PREPARING') {
+            <button class="danger" [disabled]="busy()" (click)="update(order, 'CANCELLED')">
+              Cancel order
+            </button>
+          }
+        </div>
+      </article>
+    } @empty {
+      <p>No orders yet. Add dishes, then place your first order.</p>
+    }
+  }
+</section>
