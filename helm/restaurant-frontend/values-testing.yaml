@@ -1,0 +1,7 @@
+# Choose an already published, tested image; promotion does not rebuild it.
+image:
+  tag: sha-031891eb6be095cef789dcecd2855c74370d1fa3
+
+backends:
+  menuUrl: http://restaurant-menu:8081
+  orderUrl: http://restaurant-order:8082
