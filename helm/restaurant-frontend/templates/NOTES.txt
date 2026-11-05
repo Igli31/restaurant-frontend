@@ -1,0 +1,14 @@
+Frontend release: {{ .Release.Name }}
+Namespace: {{ .Release.Namespace }}
+Image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+
+Inspect the deployment:
+  kubectl get pods,svc -n {{ .Release.Namespace }}
+
+Open a tunnel and leave it running:
+  kubectl port-forward -n {{ .Release.Namespace }} service/{{ include "restaurant-frontend.fullname" . }} 14200:{{ .Values.service.port }}
+
+Then open http://localhost:14200
+
+Menu backend: {{ .Values.backends.menuUrl }}
+Order backend: {{ .Values.backends.orderUrl }}
