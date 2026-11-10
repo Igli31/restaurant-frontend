@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/igli31/restaurant-frontend
+  # The exact image from the successful development publish.
+  tag: sha-031891eb6be095cef789dcecd2855c74370d1fa3
+  pullPolicy: IfNotPresent
+
+imagePullSecrets:
+  - name: ghcr-pull
+
+service:
+  port: 80
+
+backends:
+  menuUrl: http://restaurant-menu:8081
+  orderUrl: http://restaurant-order:8082
+
+resources:
+  requests:
+    cpu: 50m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 256Mi
