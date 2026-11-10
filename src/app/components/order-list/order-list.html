@@ -2,9 +2,23 @@
   <div class="heading">
     <h1>Orders</h1>
     <div class="actions">
-      <button (click)="load()" [disabled]="loading()">Refresh</button
+      <button (click)="load()" [disabled]="loading() || busy()">Refresh</button
       ><a class="btn" routerLink="/orders/new">Place order</a>
     </div>
+  </div>
+  <div class="status-filter">
+    <label for="order-status-filter">Filter by status</label>
+    <select
+      id="order-status-filter"
+      [ngModel]="selectedStatus()"
+      (ngModelChange)="changeStatus($event)"
+      [disabled]="loading() || busy()"
+    >
+      <option value="">All statuses</option>
+      @for (status of statuses; track status) {
+        <option [value]="status">{{ status }}</option>
+      }
+    </select>
   </div>
   @if (error()) {
     <p role="alert" class="error">{{ error() }}</p>
@@ -31,24 +45,38 @@
         </p>
         <div class="actions">
           @if (order.status === 'PLACED') {
-            <button class="btn" [disabled]="busy()" (click)="update(order, 'PREPARING')">
+            <button
+              class="btn"
+              [disabled]="busy() || loading()"
+              (click)="update(order, 'PREPARING')"
+            >
               Start preparing
             </button>
           }
           @if (order.status === 'PREPARING') {
-            <button class="btn" [disabled]="busy()" (click)="update(order, 'SERVED')">
+            <button class="btn" [disabled]="busy() || loading()" (click)="update(order, 'SERVED')">
               Mark served
             </button>
           }
           @if (order.status === 'PLACED' || order.status === 'PREPARING') {
-            <button class="danger" [disabled]="busy()" (click)="update(order, 'CANCELLED')">
+            <button
+              class="danger"
+              [disabled]="busy() || loading()"
+              (click)="update(order, 'CANCELLED')"
+            >
               Cancel order
             </button>
           }
         </div>
       </article>
     } @empty {
-      <p>No orders yet. Add dishes, then place your first order.</p>
+      @if (!error()) {
+        @if (selectedStatus()) {
+          <p>No orders match the selected status.</p>
+        } @else {
+          <p>No orders yet. Add dishes, then place your first order.</p>
+        }
+      }
     }
   }
 </section>
