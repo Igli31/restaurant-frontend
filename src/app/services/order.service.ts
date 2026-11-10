@@ -5,8 +5,10 @@ import { RestaurantOrder, OrderRequest, OrderStatus } from '../models/order.mode
 export class OrderService {
   private http = inject(HttpClient);
   private url = '/api/orders';
-  getAll() {
-    return this.http.get<RestaurantOrder[]>(this.url);
+  getAll(status?: OrderStatus) {
+    return this.http.get<RestaurantOrder[]>(this.url, {
+      params: status ? { status } : {},
+    });
   }
   getById(id: number) {
     return this.http.get<RestaurantOrder>(this.url + '/' + id);
